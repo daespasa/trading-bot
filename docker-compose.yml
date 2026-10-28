@@ -1,0 +1,43 @@
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      RESOURCE_PROFILE: ${RESOURCE_PROFILE:-low}
+      MAX_MARKETS: ${MAX_MARKETS:-}
+      API_TOKEN: ${API_TOKEN:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000}
+    volumes:
+      - ./data:/data
+      - ./models:/models
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"   # localhost only; set API_TOKEN before exposing it anywhere else
+    deploy:
+      resources:
+        limits:
+          memory: ${BACKEND_MEM_LIMIT:-2g}   # includes the training subprocess
+          cpus: "${BACKEND_CPUS:-3}"
+    logging:
+      driver: json-file
+      options: { max-size: "20m", max-file: "3" }
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:8000
+        NEXT_PUBLIC_BACKEND_WS_PORT: "${BACKEND_PORT:-8000}"  # browser WebSocket goes straight to the backend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-3000}:3000"
+    deploy:
+      resources:
+        limits:
+          memory: 512m
+          cpus: "1"
+    logging:
+      driver: json-file
+      options: { max-size: "10m", max-file: "3" }

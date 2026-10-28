@@ -1,0 +1,10 @@
+data/
+models/
+.env
+backend/.venv/
+__pycache__/
+.playwright-mcp/
+frontend/node_modules/
+frontend/.next/
+*.tsbuildinfo
+.pytest_cache/
