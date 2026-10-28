@@ -13,6 +13,7 @@ export async function api<T = unknown>(path: string, init?: RequestInit): Promis
     ...init,
     headers: {
       "Content-Type": "application/json",
+      "X-Requested-With": "paper-lab", // required by the backend for state-changing calls (CSRF)
       ...(t ? { Authorization: `Bearer ${t}` } : {}),
       ...init?.headers,
     },

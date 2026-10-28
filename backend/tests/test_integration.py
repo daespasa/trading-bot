@@ -29,8 +29,14 @@ def client():
     cfg.set_main_option("script_location", str(backend / "alembic"))
     command.upgrade(cfg, "head")  # also exercises the migrations
     from app.main import app
-    with TestClient(app) as c:
+    with TestClient(app, headers={"X-Requested-With": "paper-lab"}) as c:
         yield c
+
+
+def test_csrf_header_required_and_csv_neutralised(client):
+    from app.api.routes import _cell
+    assert client.post("/api/ml/train", headers={"X-Requested-With": ""}).status_code == 403
+    assert _cell("=HYPERLINK(1)") == "'=HYPERLINK(1)" and _cell("-0.5") == "'-0.5" and _cell("ok") == "ok"
 
 
 def test_api_smoke(client):

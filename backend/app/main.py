@@ -57,8 +57,17 @@ def _authorized(token: str | None) -> bool:
     return not settings.api_token or token == settings.api_token
 
 
+CSRF_HEADER = "x-requested-with"
+SAFE_METHODS = {"GET", "HEAD", "OPTIONS"}
+
+
 @app.middleware("http")
 async def auth(request: Request, call_next):
+    # CSRF: state-changing calls need a custom header. A foreign site cannot add it without a CORS preflight,
+    # and CORS only admits the dashboard's origins.
+    if request.url.path.startswith("/api") and request.method not in SAFE_METHODS \
+            and request.headers.get(CSRF_HEADER) != "paper-lab":
+        return JSONResponse({"detail": "missing X-Requested-With header"}, status_code=403)
     if request.url.path.startswith("/api") and request.url.path != "/api/health" and request.method != "OPTIONS":
         tok = request.headers.get("authorization", "").removeprefix("Bearer ") or request.query_params.get("token")
         if not _authorized(tok):

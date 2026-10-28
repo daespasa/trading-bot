@@ -310,12 +310,18 @@ async def trades(wallet_id: int | None = None, strategy: str = "", limit: int = 
     return {"total": total, "items": rows}
 
 
+def _cell(v):
+    """Neutralise spreadsheet formulas (CSV injection): market titles come from third parties."""
+    s = "" if v is None else str(v)
+    return "'" + s if s[:1] in ("=", "+", "-", "@", "\t", "\r") else s
+
+
 def _csv(rows: list[dict], name: str):
     buf = io.StringIO()
     if rows:
         w = csv.DictWriter(buf, fieldnames=list(rows[0]))
         w.writeheader()
-        w.writerows(rows)
+        w.writerows({k: _cell(v) for k, v in r.items()} for r in rows)
     return StreamingResponse(iter([buf.getvalue()]), media_type="text/csv",
                              headers={"Content-Disposition": f"attachment; filename={name}.csv"})
 
