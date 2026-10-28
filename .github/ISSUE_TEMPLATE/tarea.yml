@@ -1,0 +1,15 @@
+name: Tarea
+description: Trabajo concreto de ingeniería
+labels: ["tarea"]
+body:
+  - type: input
+    id: epica
+    attributes: { label: Épica, placeholder: "#nº de la épica" }
+  - type: textarea
+    id: que
+    attributes: { label: Qué hay que hacer }
+    validations: { required: true }
+  - type: textarea
+    id: aceptacion
+    attributes: { label: Criterio de aceptación, description: Comprobable, idealmente con un test }
+    validations: { required: true }

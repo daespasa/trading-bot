@@ -1,0 +1,20 @@
+name: Épica
+description: Objetivo grande con su propia rama epic/<slug> y sub-issues
+title: "[Épica] "
+labels: ["épica"]
+body:
+  - type: textarea
+    id: objetivo
+    attributes: { label: Objetivo, description: Qué pregunta responde o qué capacidad añade }
+    validations: { required: true }
+  - type: input
+    id: rama
+    attributes: { label: Rama, placeholder: "epic/<slug>" }
+    validations: { required: true }
+  - type: textarea
+    id: hecho
+    attributes: { label: Criterio de cierre, description: Cuándo se considera terminada (con datos, no con sensaciones) }
+    validations: { required: true }
+  - type: textarea
+    id: fuera
+    attributes: { label: Fuera de alcance }

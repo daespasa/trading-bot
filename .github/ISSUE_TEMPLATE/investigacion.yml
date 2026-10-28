@@ -1,0 +1,23 @@
+name: Investigación
+description: Hipótesis que se valida con datos (se escribe ANTES de ver resultados)
+labels: ["investigación"]
+body:
+  - type: input
+    id: epica
+    attributes: { label: Épica, placeholder: "#nº de la épica" }
+  - type: textarea
+    id: hipotesis
+    attributes: { label: Hipótesis, description: "Qué esperamos y por qué (mecanismo económico)" }
+    validations: { required: true }
+  - type: textarea
+    id: datos
+    attributes: { label: Datos y periodo, description: "Fuente, periodo de entrenamiento y periodo fuera de muestra, sin solaparse" }
+    validations: { required: true }
+  - type: textarea
+    id: metrica
+    attributes: { label: Métrica y referencia, description: "Contra qué se compara (comprar y mantener, precio de mercado, liquidez sin riesgo)" }
+    validations: { required: true }
+  - type: textarea
+    id: exito
+    attributes: { label: Criterio de éxito y de descarte, description: "Fijado de antemano; incluye costes y ejecución conservadora" }
+    validations: { required: true }

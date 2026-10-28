@@ -1,0 +1,14 @@
+name: Bug
+description: Algo funciona mal
+labels: ["bug"]
+body:
+  - type: textarea
+    id: que
+    attributes: { label: Qué pasa y qué debería pasar }
+    validations: { required: true }
+  - type: textarea
+    id: reproducir
+    attributes: { label: Cómo reproducirlo }
+  - type: textarea
+    id: impacto
+    attributes: { label: Impacto, description: "¿Afecta a la contabilidad o a los resultados registrados?" }
