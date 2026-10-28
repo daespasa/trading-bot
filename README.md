@@ -1,5 +1,7 @@
 # Polymarket AI Trading Lab (paper trading only)
 
+[![CI](https://github.com/daespasa/trading-bot/actions/workflows/ci.yml/badge.svg)](https://github.com/daespasa/trading-bot/actions/workflows/ci.yml)
+
 A lab that answers one question with real data: **would any automated strategy have beaten Polymarket prices after costs?**
 It collects live Polymarket data, runs arbitrage, rule-based and machine-learning strategies against it, and simulates every trade with fictitious USDC under explicit execution assumptions. Results are reported together with their statistical uncertainty.
 
@@ -58,6 +60,7 @@ Binance klines (20 s) ───────────────────�
 | `frontend/app/*` | dashboard pages (Next.js App Router, shadcn/ui, TanStack Query/Table/Virtual, Recharts) |
 
 Further reading:
+- [CONTRIBUTING.md](CONTRIBUTING.md): how we work (branches, epics, Conventional Commits in Spanish, definition of done).
 - [docs/EXECUTION_MODEL.md](docs/EXECUTION_MODEL.md): fees, scenarios, sizing, settlement and accounting invariants.
 - [docs/ML_METHODOLOGY.md](docs/ML_METHODOLOGY.md): data, leakage prevention, walk-forward validation and the activation gate.
 - [docs/STRATEGIES.md](docs/STRATEGIES.md): what each strategy does, and why some "opportunities" are logged but never traded.
