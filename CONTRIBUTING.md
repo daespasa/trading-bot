@@ -19,6 +19,17 @@ Ejemplo: `research/12-backtest-tendencia-btc`, que sale de `epic/cripto-tendenci
 
 Antes de abrir un PR, actualiza tu rama con la de destino (`git rebase origin/epic/<slug>`). Para fusionar se usa **squash merge** en las tareas (un commit por issue) y **merge commit** en épica → `develop` → `main`, para conservar la historia.
 
+### CI
+
+Cada PR debe tener la CI en verde antes de fusionarse. Ahora mismo GitHub no lanza la CI automáticamente con push ni con PR (pendiente de revisar en la configuración de la cuenta), así que hay que lanzarla a mano sobre la rama del PR:
+
+```bash
+gh workflow run ci.yml --ref <rama>
+gh run watch $(gh run list --branch <rama> -L 1 --json databaseId --jq '.[0].databaseId')
+```
+
+Cuando los eventos automáticos funcionen, se marcarán los checks `backend (pytest)` y `frontend (tipos, lint, build)` como obligatorios en la protección de `main` y `develop`.
+
 ## Épicas e issues
 
 - **Épica** (etiqueta `épica`): un objetivo grande con su rama `epic/...`. Sus tareas son *sub-issues*.
